@@ -1,18 +1,22 @@
-enum FilterTypes{
-  
+enum MaskTypes{
   NONE{
     public String toString() {
       return "Original";
     }
   },
-  BW_AVG{
+  EDGE{
     public String toString() {
-      return "RGB Average";
+      return "Edge";
     }
   },
-  BW_LUMA{
+  BLUR{
     public String toString() {
-      return "Luma";
+      return "Blur";
+    }
+  },
+  SHARPEN{
+    public String toString() {
+      return "Sharpen";
     }
   }
 }
