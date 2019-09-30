@@ -14,5 +14,10 @@ enum FilterTypes{
     public String toString() {
       return "Luma";
     }
+  },
+  HISTOGRAM{
+    public String toString() {
+      return "Histogram";
+    }
   }
 }

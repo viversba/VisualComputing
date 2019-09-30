@@ -35,6 +35,14 @@ class Canvas{
     canvas.endDraw();
   }
   
+  public void ModifyWithHistogram(Histogram hist){
+    canvas.beginDraw();
+    canvas.background(76);
+    canvas.image(image.ModifyWithHistogram(hist),0,0);
+    canvas.text(label, 10, image.GetHeight() + 20);
+    canvas.endDraw();
+  }
+  
   public int GetWidth(){
     return image.GetWidth();
   }

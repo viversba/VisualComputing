@@ -14,14 +14,13 @@ class Image{
   } 
   
   public PImage Filtered(FilterTypes effectType){
-    PImage edited = img;
     
     switch(effectType){
       case BW_AVG:
         for(int i=0; i<edited.height; i++){
           for(int j=0; j<edited.width; j++){
             int pos = i*edited.width + j;
-            color c = edited.pixels[pos];
+            color c = img.pixels[pos];
             float value = (red(c) + green(c) + blue(c)) /3;
             edited.pixels[pos] = color(value); 
           }
@@ -31,11 +30,48 @@ class Image{
         for(int i=0; i<edited.height; i++){
           for(int j=0; j<edited.width; j++){
             int pos = i*edited.width + j;
-            color c = edited.pixels[pos];
+            color c = img.pixels[pos];
             edited.pixels[pos] = color((int)(r * (float)red(c) + gr * (float)green(c) + b * (float)blue(c)));
           }
         }
         break;
+    }
+    
+    return edited;
+  }
+  
+  public PImage ModifyWithHistogram(Histogram hist){
+    
+    Range range = new Range(hist);
+    
+    //for(int i=0; i<edited.height; i++){
+    //  for(int j=0; j<edited.width; j++){
+    //    int pos = i*edited.width + j;
+    //    color c = edited.pixels[pos];
+    //    float value = (red(c) + green(c) + blue(c)) /3;
+    //    edited.pixels[pos] = color(value); 
+    //  }
+    //}
+    
+    for(int i=0; i<edited.height; i++){
+      for(int j=0; j<edited.width; j++){
+        int pos = i*edited.width + j;
+        color c = img.pixels[pos];
+        int r = (c >> 16) & 0xFF;
+        int g = (c >> 8) & 0xFF;
+        int b = c & 0xFF;
+        
+        int red = 0, green = 0, blue = 0;
+        if(r < range.RMax && r > range.RMin)
+          red = r;
+        if(g < range.GMax && g > range.GMin)
+          green = g;
+        if(b < range.BMax && b > range.BMin)
+          blue = b;
+          
+        color newC = color(red,green,blue);
+        edited.pixels[pos] = newC;
+      }
     }
     
     return edited;
